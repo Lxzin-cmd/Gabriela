@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Quer namorar comigo?</title>
+
+        <style>
+body {
+    background: #ffe6f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+#tela1, #tela2 {
+    background: #fff;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    text-align: center;
+}
+h1 {
+    color: #d63384;
+    margin-bottom: 30px;
+}
+button {
+    padding: 15px 35px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 10px;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.btn-sim {
+    background: #d63384;
+    color: #fff;
+    border: 2px solid #d63384;
+    font-weight: bold;
+}
+.btn-sim:hover {
+    background: #a61e4d;
+    color: #fff;
+}
+.btn-nao {
+    background: #fff0f6;
+    color: #d63384;
+    border: 2px solid #d63384;
+    font-weight: bold;
+}
+.btn-nao:hover {
+    background: #ffe6f2;
+    color: #a61e4d;
+}
+.btn-fechar {
+    background: #d63384;
+    color: #fff;
+    border: 2px solid #d63384;
+    font-size: 1.1rem;
+    margin-top: 20px;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+.btn-fechar:hover {
+    background: #a61e4d;
+}
+    </style>
+    </head>
+    <body>
+        <div id="tela1">
+        <h1>Quer namorar comigo?</h1>
+    <button class="btn-sim" onclick="mostrarTela2()"><strong>Sim</strong></button>
+    <button id="btn-nao" class="btn-nao"><strong>Não</strong></button>
+        </div>
+
+        <div id="tela2" style="display:none;">
+            <h1>Ebaaa! Agora somos namorados! 🥰</h1>
+            <button class="btn-fechar" onclick="fecharJanela()">Fechar</button>
+        </div>
+
+        <script>
+            function mostrarTela2() {
+                document.getElementById('tela1').style.display = 'none';
+                document.getElementById('tela2').style.display = 'block';
+            }
+
+            function fecharJanela() {
+    window.open('', '_self', '');
+    window.close();
+}
+
+            // Botão "Não" foge do mouse
+            const btnNao = document.getElementById('btn-nao');
+            const tela1 = document.getElementById('tela1');
+            if(btnNao && tela1) {
+                tela1.style.position = 'relative';
+                btnNao.style.position = 'absolute';
+                btnNao.style.left = '60%';
+                btnNao.style.top = '60%';
+                btnNao.addEventListener('mouseenter', function(e) {
+                    const containerRect = tela1.getBoundingClientRect();
+                    const btnRect = btnNao.getBoundingClientRect();
+                    const padding = 10;
+                    const maxX = containerRect.width - btnRect.width - padding;
+                    const maxY = containerRect.height - btnRect.height - padding;
+                    const mouseX = e.clientX - containerRect.left;
+                    const mouseY = e.clientY - containerRect.top;
+                    let x, y;
+                    let distanciaMinima = 180; // Distância mínima do mouse em px
+                    let tentativas = 0;
+                    do {
+                        x = Math.random() * maxX;
+                        y = Math.random() * maxY;
+                        tentativas++;
+                        // Evita loop infinito
+                        if (tentativas > 30) break;
+                    } while (Math.abs(x - mouseX) < distanciaMinima && Math.abs(y - mouseY) < distanciaMinima);
+                    btnNao.style.left = x + 'px';
+                    btnNao.style.top = y + 'px';
+                });
+            }
+        </script>
+    </body>
+</html>
